@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String      @id @default(uuid())
+  username     String      @unique
+  passwordHash String
+  role         String      @default("user")
+  characters   Character[]
+}
+
+model Character {
+  id               String   @id
+  characterName    String
+  speciesArchetype String
+  career           String
+  player           String
+  soakValue        Int
+  woundsThreshold  Int
+  woundsCurrent    Int
+  strainThreshold  Int
+  strainCurrent    Int
+  defenseRanged    Int
+  defenseMelee     Int
+  brawn            Int @default(2)
+  agility          Int @default(2)
+  intellect        Int @default(2)
+  cunning          Int @default(2)
+  willpower        Int @default(2)
+  presence         Int @default(2)
+  skills           Json?
+  weapons          Weapon[]
+  armors           Armor[]
+  motivations      Json?
+  description      Json?
+  equipment        Json?
+  notes            String?
+  criticalInjuries Json?
+  talents          Json?
+  updatedAt        DateTime @updatedAt
+  lastUpdatedBy    String?
+  userId           String?
+  user             User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model Weapon {
+  id      String      @id @default(uuid())
+  name    String      @unique
+  skill   String
+  damage  String
+  crit    String
+  range   String
+  special String
+  characters Character[]
+}
+
+model GlobalCriticalInjury {
+  id       String @id @default(uuid())
+  type     String // "Crush", "Puncture", "Slash", "Cold", "Electricity", "Heat"
+  severity Int
+  minRoll  Int
+  maxRoll  Int
+  name     String
+  effect   String
+}
+
+model Armor {
+  id          String      @id @default(uuid())
+  name        String      @unique
+  defense     String
+  soak        String
+  encumbrance String
+  hardPoints  String
+  special     String
+  characters  Character[]
+}
