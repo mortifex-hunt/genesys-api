@@ -18,16 +18,20 @@ class UserService {
   }
 
   private async seedAdmin() {
-    const adminExists = await prisma.user.findUnique({ where: { username: 'admin' } });
-    if (!adminExists) {
-      await prisma.user.create({
-        data: {
-          username: 'admin',
-          passwordHash: bcrypt.hashSync('adminpassword', 10),
-          role: 'admin',
-        }
-      });
-      console.log('Seeded admin user');
+    try {
+      const adminExists = await prisma.user.findUnique({ where: { username: 'admin' } });
+      if (!adminExists) {
+        await prisma.user.create({
+          data: {
+            username: 'admin',
+            passwordHash: bcrypt.hashSync('adminpassword', 10),
+            role: 'admin',
+          }
+        });
+        console.log('Seeded admin user');
+      }
+    } catch (error) {
+      console.error('Error seeding admin user (non-fatal):', error);
     }
   }
 

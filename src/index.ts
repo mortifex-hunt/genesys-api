@@ -7,6 +7,15 @@ import criticalInjuryRoutes from './routes/criticalInjuryRoutes.js';
 import armorRoutes from './routes/armorRoutes.js';
 import { initializeCharacterSockets } from './sockets/characterSocket.js';
 
+// Health and root check routes for container liveness/readiness
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Genesys RPG API is running', timestamp: new Date().toISOString() });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // Register REST API routes
 app.use('/api/auth', authRoutes);
 app.use('/api', characterRoutes);

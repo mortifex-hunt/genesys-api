@@ -6,6 +6,13 @@ import weaponRoutes from './routes/weaponRoutes.js';
 import criticalInjuryRoutes from './routes/criticalInjuryRoutes.js';
 import armorRoutes from './routes/armorRoutes.js';
 import { initializeCharacterSockets } from './sockets/characterSocket.js';
+// Health and root check routes for container liveness/readiness
+app.get('/', (req, res) => {
+    res.json({ status: 'ok', message: 'Genesys RPG API is running', timestamp: new Date().toISOString() });
+});
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 // Register REST API routes
 app.use('/api/auth', authRoutes);
 app.use('/api', characterRoutes);
@@ -16,7 +23,7 @@ app.use('/api', armorRoutes);
 // Register Socket.io events
 initializeCharacterSockets(io);
 // Start the server
-httpServer.listen(PORT, '0.0.0.0', () => {
+httpServer.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`=========================================`);
     console.log(`🚀 Genesys RPG Reactive Backend is running!`);
     console.log(`📡 REST API: http://localhost:${PORT}/api`);
