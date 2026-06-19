@@ -26,7 +26,7 @@ app.use(cors({
     const isLocal = origin.startsWith('http://localhost:') || 
                     origin.startsWith('http://127.0.0.1:') ||
                     origin.startsWith('http://192.168.');
-    if (allowedOrigins.includes(origin) || isLocal) {
+    if (allowedOrigins.includes(origin) || isLocal || origin === CORS_ORIGIN) {
       callback(null, origin);
     } else {
       callback(new Error('Not allowed by CORS'));

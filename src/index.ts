@@ -19,7 +19,7 @@ app.use('/api', armorRoutes);
 initializeCharacterSockets(io);
 
 // Start the server
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT as number, '0.0.0.0', () => {
   console.log(`=========================================`);
   console.log(`🚀 Genesys RPG Reactive Backend is running!`);
   console.log(`📡 REST API: http://localhost:${PORT}/api`);
