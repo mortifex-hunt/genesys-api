@@ -54,5 +54,4 @@ jobs:
           env_vars: |
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             NODE_ENV=production
-            PORT=8080
             CORS_ORIGIN=${{ secrets.CORS_ORIGIN }}
