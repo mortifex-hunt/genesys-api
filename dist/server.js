@@ -22,7 +22,9 @@ app.use(cors({
         const isLocal = origin.startsWith('http://localhost:') ||
             origin.startsWith('http://127.0.0.1:') ||
             origin.startsWith('http://192.168.');
-        if (allowedOrigins.includes(origin) || isLocal || origin === CORS_ORIGIN) {
+        const isProductionDomain = origin === CORS_ORIGIN ||
+            origin.endsWith('mortifex.com');
+        if (allowedOrigins.includes(origin) || isLocal || isProductionDomain) {
             callback(null, origin);
         }
         else {
@@ -35,7 +37,21 @@ app.use(express.json());
 // Initialize Socket.io
 const io = new Server(httpServer, {
     cors: {
-        origin: CORS_ORIGIN,
+        origin: (origin, callback) => {
+            if (!origin)
+                return callback(null, true);
+            const isLocal = origin.startsWith('http://localhost:') ||
+                origin.startsWith('http://127.0.0.1:') ||
+                origin.startsWith('http://192.168.');
+            const isProductionDomain = origin === CORS_ORIGIN ||
+                origin.endsWith('mortifex.com');
+            if (allowedOrigins.includes(origin) || isLocal || isProductionDomain) {
+                callback(null, true);
+            }
+            else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        },
         methods: ['GET', 'POST'],
         credentials: true
     }
