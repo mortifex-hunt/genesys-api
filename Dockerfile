@@ -31,8 +31,9 @@ COPY package*.json ./
 COPY prisma ./prisma/
 RUN npm ci --only=production
 
-# Generate Prisma Client again for the runtime environment
-RUN npx prisma generate
+# Copy the generated Prisma Client from the builder stage
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/client
 
 # Copy the compiled build from the builder stage
 COPY --from=builder /app/dist ./dist
