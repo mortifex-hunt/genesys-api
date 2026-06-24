@@ -1,4 +1,4 @@
-FROM node:20-alpine AS builder
+FROM node:20-bookworm-slim AS builder
 
 WORKDIR /app
 
@@ -17,9 +17,15 @@ RUN npx prisma generate
 RUN npm run build
 
 # Stage 2: Production runtime
-FROM node:20-alpine
+FROM node:20-bookworm-slim
 
 WORKDIR /app
+
+# Install curl (required for downloading zrok)
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# Install zrok using official installation script
+RUN curl -sSf https://get.openziti.io/install.bash | bash -s zrok
 
 # Set NODE_ENV to production
 ENV NODE_ENV=production
@@ -38,6 +44,10 @@ COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/clie
 # Copy the compiled build from the builder stage
 COPY --from=builder /app/dist ./dist
 
+# Copy start.sh script
+COPY start.sh ./start.sh
+RUN chmod +x ./start.sh
+
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["./start.sh"]

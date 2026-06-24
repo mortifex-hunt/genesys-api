@@ -30,8 +30,8 @@ async function main() {
   for (const user of users) {
     await localPrisma.user.upsert({
       where: { id: user.id },
-      update: user,
-      create: user
+      update: user as any,
+      create: user as any
     });
   }
 
@@ -42,8 +42,8 @@ async function main() {
   for (const char of characters) {
     await localPrisma.character.upsert({
       where: { id: char.id },
-      update: char,
-      create: char
+      update: char as any,
+      create: char as any
     });
   }
 
@@ -54,8 +54,8 @@ async function main() {
   for (const talent of customTalents) {
     await localPrisma.customTalent.upsert({
       where: { id: talent.id },
-      update: talent,
-      create: talent
+      update: talent as any,
+      create: talent as any
     });
   }
 

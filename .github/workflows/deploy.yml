@@ -55,3 +55,5 @@ jobs:
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             NODE_ENV=production
             CORS_ORIGIN=${{ secrets.CORS_ORIGIN }}
+            ZROK_ENABLE_TOKEN=${{ secrets.ZROK_ENABLE_TOKEN }}
+            ZROK_SHARE_TOKEN=${{ secrets.ZROK_SHARE_TOKEN }}
