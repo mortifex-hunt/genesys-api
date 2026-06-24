@@ -7,6 +7,14 @@ if [ -z "$ZROK_ENABLE_TOKEN" ] || [ -z "$ZROK_SHARE_TOKEN" ]; then
   exit 1
 fi
 
+# Trap SIGTERM and SIGINT to gracefully disable zrok
+cleanup() {
+    echo "Received termination signal. Disabling zrok environment..."
+    zrok disable
+    exit 0
+}
+trap cleanup TERM INT
+
 echo "Authenticating zrok..."
 zrok enable "$ZROK_ENABLE_TOKEN"
 
@@ -18,4 +26,5 @@ zrok access private "$ZROK_SHARE_TOKEN" --bind 127.0.0.1:5432 --headless &
 sleep 5
 
 echo "Starting the backend server..."
-exec npm start
+npm start &
+wait $!
