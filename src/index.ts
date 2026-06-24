@@ -35,5 +35,5 @@ httpServer.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`🚀 Genesys RPG Reactive Backend is running! `);
   console.log(`📡 REST API: http://localhost:${PORT}/api`);
   console.log(`🔌 WebSockets: http://localhost:${PORT}`);
-  console.log(`=========================================`);
+  console.log(`===========================================`);
 });
