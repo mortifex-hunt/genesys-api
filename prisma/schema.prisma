@@ -27,12 +27,12 @@ model Character {
   strainCurrent    Int
   defenseRanged    Int
   defenseMelee     Int
-  brawn            Int @default(2)
-  agility          Int @default(2)
-  intellect        Int @default(2)
-  cunning          Int @default(2)
-  willpower        Int @default(2)
-  presence         Int @default(2)
+  brawn            Int      @default(2)
+  agility          Int      @default(2)
+  intellect        Int      @default(2)
+  cunning          Int      @default(2)
+  willpower        Int      @default(2)
+  presence         Int      @default(2)
   skills           Json?
   weapons          Weapon[]
   armors           Armor[]
@@ -45,17 +45,18 @@ model Character {
   updatedAt        DateTime @updatedAt
   lastUpdatedBy    String?
   userId           String?
-  user             User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 }
 
 model Weapon {
-  id      String      @id @default(uuid())
-  name    String      @unique
-  skill   String
-  damage  String
-  crit    String
-  range   String
-  special String
+  id         String      @id @default(uuid())
+  name       String      @unique
+  skill      String
+  damage     String
+  crit       String
+  range      String
+  special    String
+  data       Json?
   characters Character[]
 }
 
@@ -77,5 +78,114 @@ model Armor {
   encumbrance String
   hardPoints  String
   special     String
+  data        Json?
   characters  Character[]
+}
+
+model Adversary {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model AdversaryAbility {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Archetype {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model ArchetypeAbility {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Book {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Career {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Characteristic {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Gear {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model OptionFeature {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Quality {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Rule {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Setting {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Sidebar {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Skill {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Spell {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Table {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Talent {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
+model Vehicle {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
 }
