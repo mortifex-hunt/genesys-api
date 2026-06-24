@@ -21,8 +21,8 @@ FROM node:20-bookworm-slim
 
 WORKDIR /app
 
-# Install curl (required for downloading zrok)
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+# Install curl and gnupg (required for downloading and verifying zrok)
+RUN apt-get update && apt-get install -y curl gnupg && rm -rf /var/lib/apt/lists/*
 
 # Install zrok using official installation script
 RUN curl -sSf https://get.openziti.io/install.bash | bash -s zrok
