@@ -184,6 +184,12 @@ model Talent {
   data Json
 }
 
+model CustomTalent {
+  id   String @id @default(uuid())
+  name String @unique
+  data Json
+}
+
 model Vehicle {
   id   String @id @default(uuid())
   name String @unique
